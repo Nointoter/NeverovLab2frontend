@@ -1,0 +1,26 @@
+<div class="container my-5">
+    <h1 class="mb-3">Персонажи</h1>
+    <table class="table" *ngIf="characters && characters.length > 0">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Id создателя</th>
+                <th>Имя</th>
+                <th>Пол</th>
+                <th>Раса</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let character of characters">
+                <td>{{character.id}}</td>
+                <td>{{character.id_Member}}</td>
+                <td>{{character.name}}</td>
+                <td>{{character.gender}}</td>
+                <td>{{character.race}}</td>
+                <td><a [routerLink]="['/characters', 'edit', character.id]">View</a></td>
+            </tr>
+        </tbody>
+    </table>
+    <p *ngIf="!characters || characters.length <= 0">Нет Персонажей</p>
+</div>

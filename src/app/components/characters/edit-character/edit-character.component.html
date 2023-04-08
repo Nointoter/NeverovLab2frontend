@@ -1,0 +1,39 @@
+<div class="container my-5">
+    <h1 class="mb-3">Изменить персонажа</h1>
+    <div class="row">
+        <div class="col-6">
+            <form #form="ngForm">
+                <div class="mb-3">
+                    <label for="id" class="form-label">Id</label>
+                    <input type="text" class="form-control" id="id" readonly
+                    name="id" [(ngModel)] = "addCharacterRequest.id">
+                </div>
+                <div class="mb-3">
+                    <label for="id_Member" class="form-label">Id создателя</label>
+                    <input type="text" class="form-control" id="id_Member" 
+                    name="id_Member" [(ngModel)] = "addCharacterRequest.id_Member">
+                </div>
+                <div class="mb-3">
+                    <label for="name" class="form-label">Имя персонажа</label>
+                    <input type="text" class="form-control" id="name" 
+                    name="name" [(ngModel)] = "addCharacterRequest.name">
+                </div>
+                <div class="mb-3">
+                    <label for="gender" class="form-label">Пол персонажа</label>
+                    <select id="gender" class="form-select"
+                    name="gender" [(ngModel)] = "addCharacterRequest.gender">
+                        <option value="0">Неизвестно</option>
+                        <option value="1">Мужской</option>
+                        <option value="2">Женский</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="race" class="form-label">Раса персонажа</label>
+                    <input type="text" class="form-control" id="race"
+                    name="race" [(ngModel)] = "addCharacterRequest.race">
+                </div>
+                <button type="submit" class="btn btn-primary">Создать</button>
+            </form>        
+        </div>
+    </div>
+</div>
