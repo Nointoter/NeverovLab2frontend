@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { AddCharacter } from 'src/app/models/addCharacter.model';
+import { CharacterClass } from 'src/app/models/characterClass.model';
 import { CharactersService } from 'src/app/services/characters.service';
 
 @Component({
@@ -10,21 +10,22 @@ import { CharactersService } from 'src/app/services/characters.service';
 })
 export class AddCharacterComponent {
 
-  addCharacterRequest: AddCharacter = {
+  addCharacterRequest: CharacterClass = {
     id: 0,
     id_Member: 0,
     name: '',
     gender: 0,
     race: '',
   };
-  constructor(private characterService: CharactersService,
+  
+  constructor(private charactersService: CharactersService,
     private router: Router) {}
 
   ngOnInit(): void {
   }
 
   addCharacter() {
-    this.characterService.addCharacter(this.addCharacterRequest)
+    this.charactersService.addCharacter(this.addCharacterRequest)
     .subscribe({
       next: (response) => {
         console.log(response);

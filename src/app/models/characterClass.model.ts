@@ -1,4 +1,4 @@
-export class AddCharacter {
+export class CharacterClass {
     id?: number;
     id_Member?: number;
     name?: string;
