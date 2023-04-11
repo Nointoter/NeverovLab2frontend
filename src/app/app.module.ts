@@ -10,6 +10,10 @@ import { AddCharacterComponent } from './components/characters/add-character/add
 import { FormsModule } from '@angular/forms';
 import { EditCharacterComponent } from './components/characters/edit-character/edit-character.component';
 import { AuthInterceptor } from './services/auth.interceptor';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {MatTableModule} from '@angular/material/table';
+import {MatPaginatorModule} from '@angular/material/paginator';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -23,7 +27,11 @@ import { AuthInterceptor } from './services/auth.interceptor';
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    NgbModule,
+    BrowserAnimationsModule,
+    MatTableModule,
+    MatPaginatorModule
   ],
   providers: [
     {

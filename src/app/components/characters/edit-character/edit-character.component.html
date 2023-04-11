@@ -32,9 +32,11 @@
                     <input type="text" class="form-control" id="race"
                     name="race" [(ngModel)] = "Character.race">
                 </div>
-                <button type="submit" class="btn btn-primary me-5">Сохранить</button>
-                <button type="button" class="btn btn-danger"
-                (click)="deleteCharacter(Character.id!)">Удалить</button>
+                <div>
+                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                    <button type="button" class="btn btn-danger float-end"
+                        (click)="deleteCharacter(Character.id!)">Удалить</button>
+                </div>
             </form>        
         </div>
     </div>
