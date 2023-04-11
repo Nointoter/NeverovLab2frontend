@@ -1,6 +1,6 @@
-export interface Member {
-    id: number;
-    name: string;
-    login: string;
-    password: string;
+export class Member {
+    id?: number;
+    name = '';
+    login ='';
+    password = '';
 }
