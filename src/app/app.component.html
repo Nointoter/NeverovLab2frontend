@@ -7,8 +7,8 @@
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav">
+    <div class="navbar-collapse collapse">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item">
           <a class="nav-link active" aria-current="page" 
           routerLink="members">Участники</a>
@@ -24,19 +24,32 @@
               routerLink="characters/add">Добавить Персонажа</a></li>
           </ul>
         </li>
-        <div>
-          Name:
-          <input [(ngModel)]="user.username" placeholder="Name">
-        </div>
-        <div>
-          Password:
-          <input [(ngModel)]="user.password" placeholder="Password" type="password">
-        </div>
-        <button (click)="register(user)">Register</button>
-        <button (click)="login(user)">Login</button>
-        <button (click)="getme()">Get Me</button>
       </ul>
     </div>
+    <form class="d-flex">
+      <ul class="navbar-nav ml-auto me-5 mb-2 mb-lg-0">
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Аккаунт
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <li class="ms-2 me-2">Name:
+              <input [(ngModel)]="user.username" placeholder="Name">
+            </li>
+            <li class="ms-2 me-2">Password:
+              <input [(ngModel)]="user.password" placeholder="Password" type="password">
+            </li>
+            <li><hr class="dropdown-divider"></li>
+            <li>
+              <div>
+                <button type="button" class="ms-2 btn btn-dark" (click)="login(user)">Login</button>
+                <button type="button" class="ms-4 btn btn-dark me-2" (click)="register(user)">Register</button>
+              </div>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </form>
   </div>
 </nav>
 
