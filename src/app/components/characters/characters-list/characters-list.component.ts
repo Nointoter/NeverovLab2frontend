@@ -1,8 +1,10 @@
-import { Component, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
 import { Character } from 'src/app/models/character.model';
 import { ApiResponse } from 'src/app/models/apiResponse.model';
 import { CharactersService } from 'src/app/services/characters.service';
-import { PageEvent } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-characters-list',
@@ -11,30 +13,29 @@ import { PageEvent } from '@angular/material/paginator';
 })
 export class CharactersListComponent {
 
-  public page: number;
-  public pageEvent: PageEvent;
+  displayedColumns: string[] = ['id', 'id_Member', 'name', 'gender', 'race', 'link'];
+  dataSource: MatTableDataSource<Character>
+
+  @ViewChild(MatSort) sort: MatSort = new MatSort();
+  @ViewChild(MatPaginator) paginator: MatPaginator = new MatPaginator(new MatPaginatorIntl(), ChangeDetectorRef.prototype);
 
   characters: Character[] = [];
   apiResponse: ApiResponse = new ApiResponse();
-  dataSource = this.characters;
-  displayedColumns: string[] = ['id', 'id_Member', 'name', 'gender', 'race', 'link'];
 
-  length = 50;
-  pageSize = 10;
-  pageIndex = 0;
-  pageSizeOptions = [5, 10, 25];
-
-  hidePageSize = false;
-  showPageSizeOptions = true;
-  showFirstLastButtons = true;
-  disabled = false;
-
-  constructor(private charactersService: CharactersService, pageEvent: PageEvent) { 
-    this.page = 1;
-    this.pageEvent = pageEvent;    
+  constructor(private charactersService: CharactersService) {
+    this.dataSource = new MatTableDataSource(this.characters)
   }
 
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
 
+  applyFilter(data: string) {
+    data = data.trim(); // Remove whitespace
+    data = data.toLowerCase(); // Datasource defaults to lowercase matches
+    this.dataSource.filter = data;
+  }
 
   ngOnInit(): void {
     this.charactersService.getAllCharacters()
@@ -43,25 +44,13 @@ export class CharactersListComponent {
         console.log(response);
         this.apiResponse = response as ApiResponse;
         this.characters = this.apiResponse.responseData as Character[];
-        this.dataSource = this.characters;
+        this.dataSource = new MatTableDataSource(this.characters);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
       },
       error: (response) => {
         console.log(response);
       }
     });
   }
-
-  handlePageEvent(e: PageEvent) {
-    this.pageEvent = e;
-    this.length = e.length;
-    this.pageSize = e.pageSize;
-    this.pageIndex = e.pageIndex;
-  }
-
-  setPageSizeOptions(setPageSizeOptionsInput: string) {
-    if (setPageSizeOptionsInput) {
-      this.pageSizeOptions = setPageSizeOptionsInput.split(',').map(str => +str);
-    }
-  }
-
 }
