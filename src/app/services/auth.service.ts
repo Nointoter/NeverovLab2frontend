@@ -4,6 +4,7 @@ import { Observable } from 'rxjs/internal/Observable';
 import { User } from '../models/user.model';
 import { environment } from 'src/environments/environment.development';
 import { AuthenticatedResponse } from '../interfaces/authenticated-response.model';
+import { TokenApi } from '../interfaces/tokenApi.model';
 
 @Injectable({
   providedIn: 'root'
@@ -27,9 +28,7 @@ export class AuthService {
     });
   }
 
-  public refreshToken(refreshToken: String): Observable<string> {
-    return this.http.post(this.baseApiUrl + '/api/Auth/refresh-token', refreshToken,{
-      responseType: 'text',
-    });
+  public refreshToken(tokenApi: TokenApi): Observable<TokenApi> {
+    return this.http.post<TokenApi>(this.baseApiUrl + "/api/token/refresh", tokenApi);
   }
 }

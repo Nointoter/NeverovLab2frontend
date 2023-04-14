@@ -5,6 +5,8 @@ import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTr
 import { Observable } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { environment } from 'src/environments/environment.development';
+import { TokenApi } from '../interfaces/tokenApi.model';
+
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +18,7 @@ export class AuthGuard implements CanActivate {
   constructor(private router:Router, private jwtHelper: JwtHelperService, private http: HttpClient, ){}
   
   async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    
     const token = localStorage.getItem("jwt");
 
     if (token && !this.jwtHelper.isTokenExpired(token)){
@@ -27,7 +30,7 @@ export class AuthGuard implements CanActivate {
     if (!isRefreshSuccess) { 
       this.router.navigate(["login"]); 
     }
-
+    
     return isRefreshSuccess;
   }
 
@@ -41,18 +44,18 @@ export class AuthGuard implements CanActivate {
     const credentials = JSON.stringify({ accessToken: token, refreshToken: refreshToken });
     let isRefreshSuccess: boolean;
 
-    const refreshRes = await new Promise<AuthenticatedResponse>((resolve, reject) => {
-      this.http.post<AuthenticatedResponse>(this.baseApiUrl + "/api/token/refresh", credentials, {
+    const refreshRes = await new Promise<TokenApi>((resolve, reject) => {
+      this.http.post<TokenApi>(this.baseApiUrl + "/api/token/refresh", credentials, {
         headers: new HttpHeaders({
           "Content-Type": "application/json"
         })
       }).subscribe({
-        next: (res: AuthenticatedResponse) => resolve(res),
+        next: (res: TokenApi) => resolve(res),
         error: (_) => { reject; isRefreshSuccess = false;}
       });
     });
 
-    localStorage.setItem("jwt", refreshRes.token);
+    localStorage.setItem("jwt", refreshRes.accessToken);
     localStorage.setItem("refreshToken", refreshRes.refreshToken);
     isRefreshSuccess = true;
 

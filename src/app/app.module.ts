@@ -18,6 +18,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { AuthGuard } from './guards/auth.guard';
 import { JwtModule } from "@auth0/angular-jwt";
+import { AuthInterceptor } from './services/auth.interceptor';
+import { environment } from 'src/environments/environment';
 
 export function tokenGetter() { 
   return localStorage.getItem("jwt"); 
@@ -46,14 +48,23 @@ export function tokenGetter() {
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
-        allowedDomains: ["localhost:5001"],
+        allowedDomains: [environment.baseApiUrl],
         disallowedRoutes: []
       }
     }),
   ],
   providers: [
-    AuthGuard
-  ],
+    AuthGuard,
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
+    ],
+  //providers: [AuthGuard],
+  /*providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
+  ],*/
   bootstrap: [AppComponent]
 })
 export class AppModule { }
