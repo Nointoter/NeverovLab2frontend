@@ -13,7 +13,7 @@ import { MatSort } from '@angular/material/sort';
 })
 export class CharactersListComponent {
 
-  displayedColumns: string[] = ['id', 'id_Member', 'name', 'gender', 'race', 'link'];
+  displayedColumns: string[] = ['id', 'nameMember', 'name', 'gender', 'race', 'link'];
   dataSource: MatTableDataSource<Character>
 
   @ViewChild(MatSort) sort: MatSort = new MatSort();

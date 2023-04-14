@@ -1,8 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/internal/Observable';
 import { User } from '../models/user.model';
 import { environment } from 'src/environments/environment.development';
+import { AuthenticatedResponse } from '../interfaces/authenticated-response.model';
 
 @Injectable({
   providedIn: 'root'
@@ -20,15 +21,14 @@ export class AuthService {
     );
   }
 
-  public login(user: User): Observable<string> {
-    
-    return this.http.post(this.baseApiUrl + '/api/Auth/login', user, {
-      responseType: 'text',
+  public login(user: User): Observable<AuthenticatedResponse> {
+    return this.http.post<AuthenticatedResponse>(this.baseApiUrl + '/api/Auth/login', user, {
+      headers: new HttpHeaders({ "Content-Type": "application/json"})
     });
   }
 
-  public getMe(): Observable<string> {
-    return this.http.get(this.baseApiUrl + '/api/Auth', {
+  public refreshToken(refreshToken: String): Observable<string> {
+    return this.http.post(this.baseApiUrl + '/api/Auth/refresh-token', refreshToken,{
       responseType: 'text',
     });
   }

@@ -17,9 +17,9 @@
       </ng-container>
   
       <!-- Progress Column -->
-      <ng-container matColumnDef="id_Member">
+      <ng-container matColumnDef="nameMember">
         <mat-header-cell *matHeaderCellDef mat-sort-header> Создатель </mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{row.id_Member}} </mat-cell>
+        <mat-cell *matCellDef="let row"> {{row.nameMember}} </mat-cell>
       </ng-container>
   
       <!-- Name Column -->
@@ -52,30 +52,4 @@
     </mat-table>
   
     <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
-</div>
-
-<div>
-    <!--<table class="table" *ngIf="characters && characters.length > 0">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Id создателя</th>
-                <th>Имя</th>
-                <th>Пол</th>
-                <th>Раса</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let character of characters">
-                <td>{{character.id}}</td>
-                <td>{{character.id_Member}}</td>
-                <td>{{character.name}}</td>
-                <td>{{character.gender}}</td>
-                <td>{{character.race}}</td>
-                <td><a [routerLink]="['/characters', 'edit', character.id]">View</a></td>
-            </tr>
-        </tbody>
-    </table>
-    <p *ngIf="!characters || characters.length <= 0">Нет Персонажей</p>-->
 </div>

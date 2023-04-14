@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { AuthService } from './services/auth.service';
 import { User } from './models/user.model';
+import { AuthenticatedResponse } from './interfaces/authenticated-response.model';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -8,6 +10,8 @@ import { User } from './models/user.model';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+
+  invalidLogin: boolean = true;
   title = 'NeverovLab2frontend';
   user = new User();
 
@@ -27,19 +31,17 @@ export class AppComponent {
 
   login(user: User) {
     this.authService.login(user).subscribe({
-      next: (token: string) => {
-        localStorage.setItem('authToken', token);
+      next: (response: AuthenticatedResponse) => {
+        const token = response.token;
+        const refreshToken = response.refreshToken;
+        localStorage.setItem("jwt", token); 
+        localStorage.setItem("refreshToken", refreshToken);
+        this.invalidLogin = false;
         console.log(token);
       },
-      error: (response) => {
-        console.log(response);
-      }
+      error: (err: HttpErrorResponse) => this.invalidLogin = true
     });
   }
 
-  getme() {
-    this.authService.getMe().subscribe((name: string) => {
-      console.log(name);
-    });
-  }
+  
 }

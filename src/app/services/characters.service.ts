@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment.development';
 import { Observable } from 'rxjs';
 import { ApiResponse } from '../models/apiResponse.model';
 import { CharacterClass } from '../models/characterClass.model';
+import { CharacterTokenModel } from '../components/characters/add-character/add-character.component';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,7 @@ export class CharactersService {
     return this.http.get<ApiResponse>(this.baseApiUrl + '/api/Characters/GetCharacters')
   }
 
-  addCharacter(addCharacterRequest: CharacterClass): Observable<object> {
+  addCharacter(addCharacterRequest: CharacterTokenModel): Observable<object> {
     return this.http.post<object>(this.baseApiUrl + '/api/Characters/SaveCharacter',
     addCharacterRequest)
   }
