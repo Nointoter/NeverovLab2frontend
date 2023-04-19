@@ -9,10 +9,6 @@
     </button>
     <div class="navbar-collapse collapse">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" 
-          routerLink="members">Участники</a>
-        </li>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Персонажи
@@ -49,19 +45,24 @@
             Аккаунт
           </a>
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-            <li class="ms-2 me-2">Name:
-              <input [(ngModel)]="user.username" placeholder="Name">
-            </li>
-            <li class="ms-2 me-2">Password:
-              <input [(ngModel)]="user.password" placeholder="Password" type="password">
-            </li>
-            <li><hr class="dropdown-divider"></li>
-            <li>
-              <div>
-                <button type="button" class="ms-2 btn btn-dark" (click)="login(user)">Login</button>
-                <button type="button" class="ms-4 btn btn-dark me-2" (click)="register(user)">Register</button>
-              </div>
-            </li>
+            <div *ngIf="isLoggedIn$ | async as isLoggedIn; else elseBlock">
+              <button type="button" class="ms-2 btn btn-dark" (click)="logout()">Logout</button>
+            </div>
+            <ng-template #elseBlock>
+              <li class="ms-2 me-2">Name:
+                <input [(ngModel)]="user.username" placeholder="Name">
+              </li>
+              <li class="ms-2 me-2">Password:
+                <input [(ngModel)]="user.password" placeholder="Password" type="password">
+              </li>
+              <li><hr class="dropdown-divider"></li>
+              <li>
+                <div>
+                  <button type="button" class="ms-2 btn btn-dark" (click)="login(user)">Login</button>
+                  <button type="button" class="ms-4 btn btn-dark me-2" (click)="register(user)">Register</button>
+                </div>
+              </li>
+            </ng-template>
           </ul>
         </li>
       </ul>

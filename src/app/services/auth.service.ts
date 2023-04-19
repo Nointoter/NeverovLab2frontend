@@ -31,4 +31,8 @@ export class AuthService {
   public refreshToken(tokenApi: TokenApi): Observable<TokenApi> {
     return this.http.post<TokenApi>(this.baseApiUrl + "/api/token/refresh", tokenApi);
   }
+
+  public logout(): Observable<any> {    
+    return this.http.delete<any>(this.baseApiUrl + '/api/Auth/logout');
+  }
 }

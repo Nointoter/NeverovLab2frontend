@@ -3,6 +3,7 @@ import { AuthService } from './services/auth.service';
 import { User } from './models/user.model';
 import { AuthenticatedResponse } from './interfaces/authenticated-response.model';
 import { HttpErrorResponse } from '@angular/common/http';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -11,11 +12,19 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class AppComponent {
 
+  isLoggedIn$: Observable<boolean>;
+  loggedIn: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   invalidLogin: boolean = true;
   title = 'NeverovLab2frontend';
   user = new User();
 
-  constructor(private authService: AuthService) {}
+  constructor(private authService: AuthService) {
+    this.isLoggedIn$ = this.loggedIn.asObservable();
+  }
+
+  ngOnInit() {
+    this.isLoggedIn$ = this.loggedIn.asObservable();
+  }
 
   register(user: User) {
     this.authService.register(user)
@@ -32,16 +41,23 @@ export class AppComponent {
   login(user: User) {
     this.authService.login(user).subscribe({
       next: (response: AuthenticatedResponse) => {
-        const token = response.token;
-        const refreshToken = response.refreshToken;
-        localStorage.setItem("jwt", token); 
-        localStorage.setItem("refreshToken", refreshToken);
+        localStorage.setItem("jwt", response.token); 
+        localStorage.setItem("refreshToken", response.refreshToken);
         this.invalidLogin = false;
-        console.log(token);
+        this.loggedIn.next(true);
       },
       error: (err: HttpErrorResponse) => this.invalidLogin = true
     });
   }
 
-  
+  logout() {
+    this.authService.logout().subscribe({
+      next: (response: AuthenticatedResponse) => {
+        console.log();
+        localStorage.removeItem('jwt');
+      },
+      error: (err: HttpErrorResponse) => this.invalidLogin = true
+    });
+    this.loggedIn.next(false);
+  }  
 }

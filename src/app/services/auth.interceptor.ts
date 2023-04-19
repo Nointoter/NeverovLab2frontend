@@ -5,56 +5,16 @@ import {
   HttpEvent,
   HttpInterceptor,
   HttpClient,
-  HttpErrorResponse
+  HttpErrorResponse,
+  HttpResponse
 } from '@angular/common/http';
-import {catchError, Observable, switchMap, throwError} from 'rxjs';
+import {BehaviorSubject, catchError, filter, Observable, switchMap, take, throwError} from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { AuthService } from './auth.service';
 import { TokenApi } from '../interfaces/tokenApi.model';
 import { Router } from '@angular/router';
 
 @Injectable()
-export class AuthInterceptor implements HttpInterceptor {
-  constructor(private authService: AuthService) {}
-  intercept(
-    request: HttpRequest<any>,
-    next: HttpHandler
-  ): Observable<HttpEvent<any>> {
-    const token = localStorage.getItem("jwt");
-    if (token) {
-      request = request.clone({
-        setHeaders: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-    }
-    return next.handle(request).pipe(
-      catchError((err: HttpErrorResponse) => {
-        if (err.status === 401) {
-          //this.authService.logout();
-          const token = localStorage.getItem("jwt")!;
-          const refreshToken = localStorage.getItem("refreshToken")!;
-          const credentials: TokenApi = { accessToken: token, refreshToken: refreshToken };
-          this.authService.refreshToken(credentials)
-          .subscribe({
-            next: (response) => {
-              console.log("this response manham");
-              console.log(response);
-              localStorage.setItem("jwt", response.accessToken);
-              localStorage.setItem("refreshToken", response.refreshToken);
-            },
-            error: (response) => {
-              //console.log(response);
-            }
-          });
-        }
-        const error = err.error.message || err.statusText;
-        return throwError(error);
-      })
-    );
-  }
-}
-/*
 export class AuthInterceptor implements HttpInterceptor {
   token = localStorage.getItem("jwt");
   refresh = false;
@@ -66,7 +26,7 @@ export class AuthInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     const req = request.clone({
       setHeaders: {
-        Authorization: `Bearer ${this.token}`
+        Authorization: `Bearer ${localStorage.getItem("jwt")!}`
       }
     });
 
@@ -84,7 +44,7 @@ export class AuthInterceptor implements HttpInterceptor {
             this.token = res.accessToken;
             return next.handle(request.clone({
               setHeaders: {
-                Authorization: `Bearer ${this.token}`
+                Authorization: `Bearer ${localStorage.getItem("jwt")!}`
               }
             }));
           })
@@ -94,4 +54,4 @@ export class AuthInterceptor implements HttpInterceptor {
       return throwError(() => err);
     }));
   }
-}*/
+}
