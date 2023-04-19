@@ -1,3 +1,20 @@
+<div class="container my-5">
+    <h1 class="mb-3">Добавить персонажа</h1>
+    <div class="row">
+        <div class="col-6">
+            <form #form="ngForm" (ngSubmit)="addCharacter(session.id_Character!)">
+                <div class="mb-3">
+                    <label for="id_Character" class="form-label">Id</label>
+                    <input type="number" class="form-control" id="id_Character"
+                    name="id_Character" [(ngModel)] = "session.id_Character">
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-primary">Добавить</button>
+                </div>
+            </form>        
+        </div>
+    </div>
+</div>
 <div>
     <h1 class="mb-3">Персонажи</h1>
 </div>
@@ -10,40 +27,25 @@
 
     <mat-table [dataSource]="dataSource" matSort>
   
-      <!-- ID Column -->
       <ng-container matColumnDef="id">
         <mat-header-cell *matHeaderCellDef mat-sort-header> ID </mat-header-cell>
         <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
       </ng-container>
   
-      <!-- Progress Column -->
-      <ng-container matColumnDef="name_User">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Создатель </mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{row.name_User}} </mat-cell>
-      </ng-container>
-  
-      <!-- Name Column -->
       <ng-container matColumnDef="name">
         <mat-header-cell *matHeaderCellDef mat-sort-header> Имя персонажа </mat-header-cell>
         <mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
       </ng-container>
       
-      <!-- Gender Column -->
-      <ng-container matColumnDef="gender_Name">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Пол </mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{row.gender_Name}} </mat-cell>
-      </ng-container>
-      
-      <!-- Race Column -->
       <ng-container matColumnDef="race">
         <mat-header-cell *matHeaderCellDef mat-sort-header> Раса </mat-header-cell>
         <mat-cell *matCellDef="let row"> {{row.race}} </mat-cell>
       </ng-container>
   
-      <!-- Color Column -->
       <ng-container matColumnDef="link">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Посмотреть </mat-header-cell>
-        <mat-cell *matCellDef="let row"><a [routerLink]="['/characters', 'edit', row.id]">View</a></mat-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Удалить </mat-header-cell>
+        <mat-cell *matCellDef="let row"><button type="button" class="btn btn-danger float-end"
+            (click)="deleteCharacter(row.id!)">Удалить</button></mat-cell>
       </ng-container>
   
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

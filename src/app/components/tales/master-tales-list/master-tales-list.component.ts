@@ -1,29 +1,28 @@
 import { ChangeDetectorRef, Component, ViewChild } from '@angular/core';
-import { Character } from 'src/app/models/character.model';
-import { ApiResponse } from 'src/app/models/apiResponse.model';
-import { CharactersService } from 'src/app/services/characters.service';
-import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator, MatPaginatorIntl } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { ApiResponse } from 'src/app/models/apiResponse.model';
+import { Tale } from 'src/app/models/tale.model';
+import { TalesService } from 'src/app/services/tales.service';
 
 @Component({
-  selector: 'app-characters-list',
-  templateUrl: './characters-list.component.html',
-  styleUrls: ['./characters-list.component.css']
+  selector: 'app-master-tales-list',
+  templateUrl: './master-tales-list.component.html',
+  styleUrls: ['./master-tales-list.component.css']
 })
-export class CharactersListComponent {
-
-  displayedColumns: string[] = ['id', 'name_User', 'name', 'gender_Name', 'race', 'link'];
-  dataSource: MatTableDataSource<Character>
+export class MasterTalesListComponent {
+  displayedColumns: string[] = ['id', 'name', 'count_parties', 'start_Tale', 'link'];
+  dataSource: MatTableDataSource<Tale>
 
   @ViewChild(MatSort) sort: MatSort = new MatSort();
   @ViewChild(MatPaginator) paginator: MatPaginator = new MatPaginator(new MatPaginatorIntl(), ChangeDetectorRef.prototype);
 
-  characters: Character[] = [];
+  tales: Tale[] = [];
   apiResponse: ApiResponse = new ApiResponse();
 
-  constructor(private charactersService: CharactersService) {
-    this.dataSource = new MatTableDataSource(this.characters)
+  constructor(private talesService: TalesService) {
+    this.dataSource = new MatTableDataSource(this.tales)
   }
 
   ngAfterViewInit() {
@@ -38,13 +37,13 @@ export class CharactersListComponent {
   }
 
   ngOnInit(): void {
-    this.charactersService.getAllCharacters()
+    this.talesService.getMasterTales()
     .subscribe({
       next: (response) => {
         //console.log(response);
         this.apiResponse = response as ApiResponse;
-        this.characters = this.apiResponse.responseData as Character[];
-        this.dataSource = new MatTableDataSource(this.characters);
+        this.tales = this.apiResponse.responseData as Tale[];
+        this.dataSource = new MatTableDataSource(this.tales);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       },

@@ -25,8 +25,7 @@ export class AddCharacterComponent {
   }
 
   addCharacter() {
-    const CharacterTokenModel: CharacterTokenModel = { CharacterModel: this.addCharacterRequest, token: localStorage.getItem("jwt")! };
-    this.charactersService.addCharacter(CharacterTokenModel)
+    this.charactersService.addCharacter(this.addCharacterRequest)
     .subscribe({
       next: (response) => {
         console.log(response);
@@ -37,9 +36,4 @@ export class AddCharacterComponent {
       }
     })
   }
-}
-
-export class CharacterTokenModel {
-  CharacterModel?: CharacterClass;
-  token?: string;
 }

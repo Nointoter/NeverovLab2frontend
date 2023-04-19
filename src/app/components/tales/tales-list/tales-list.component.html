@@ -1,5 +1,5 @@
 <div>
-    <h1 class="mb-3">Персонажи</h1>
+    <h1 class="mb-3">Истории</h1>
 </div>
 <div class="example-header">
     <mat-form-field>
@@ -16,34 +16,34 @@
         <mat-cell *matCellDef="let row"> {{row.id}} </mat-cell>
       </ng-container>
   
-      <!-- Progress Column -->
-      <ng-container matColumnDef="name_User">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Создатель </mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{row.name_User}} </mat-cell>
-      </ng-container>
-  
       <!-- Name Column -->
       <ng-container matColumnDef="name">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Имя персонажа </mat-header-cell>
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Название истории </mat-header-cell>
         <mat-cell *matCellDef="let row"> {{row.name}} </mat-cell>
       </ng-container>
-      
-      <!-- Gender Column -->
-      <ng-container matColumnDef="gender_Name">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Пол </mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{row.gender_Name}} </mat-cell>
+
+      <!-- Master Column -->
+      <ng-container matColumnDef="name_Master">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Мастер </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.name_Master}} </mat-cell>
       </ng-container>
       
-      <!-- Race Column -->
-      <ng-container matColumnDef="race">
-        <mat-header-cell *matHeaderCellDef mat-sort-header> Раса </mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{row.race}} </mat-cell>
+      <!-- Count Column -->
+      <ng-container matColumnDef="count_parties">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Количество партий </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.count_parties}} </mat-cell>
+      </ng-container>
+
+      <!-- Start Column -->
+      <ng-container matColumnDef="start_Tale">
+        <mat-header-cell *matHeaderCellDef mat-sort-header> Начало </mat-header-cell>
+        <mat-cell *matCellDef="let row"> {{row.start_Tale}} </mat-cell>
       </ng-container>
   
       <!-- Color Column -->
       <ng-container matColumnDef="link">
         <mat-header-cell *matHeaderCellDef mat-sort-header> Посмотреть </mat-header-cell>
-        <mat-cell *matCellDef="let row"><a [routerLink]="['/characters', 'edit', row.id]">View</a></mat-cell>
+        <mat-cell *matCellDef="let row"><a [routerLink]="['/tales', 'edit', row.id]">View</a></mat-cell>
       </ng-container>
   
       <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

@@ -4,7 +4,6 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { MembersListComponent } from './components/members/members-list/members-list.component';
 import { CharactersListComponent } from './components/characters/characters-list/characters-list.component';
 import { AddCharacterComponent } from './components/characters/add-character/add-character.component';
 import { FormsModule } from '@angular/forms';
@@ -20,6 +19,11 @@ import { AuthGuard } from './guards/auth.guard';
 import { JwtModule } from "@auth0/angular-jwt";
 import { AuthInterceptor } from './services/auth.interceptor';
 import { environment } from 'src/environments/environment';
+import { TalesListComponent } from './components/tales/tales-list/tales-list.component';
+import { AddTaleComponent } from './components/tales/add-tale/add-tale.component';
+import { MasterTalesListComponent } from './components/tales/master-tales-list/master-tales-list.component';
+import { EditTaleComponent } from './components/tales/edit-tale/edit-tale.component';
+import { SessionsComponent } from './components/sessions/sessions.component';
 
 export function tokenGetter() { 
   return localStorage.getItem("jwt"); 
@@ -28,10 +32,14 @@ export function tokenGetter() {
 @NgModule({
   declarations: [
     AppComponent,
-    MembersListComponent,
     CharactersListComponent,
     AddCharacterComponent,
-    EditCharacterComponent
+    EditCharacterComponent,
+    TalesListComponent,
+    AddTaleComponent,
+    MasterTalesListComponent,
+    EditTaleComponent,
+    SessionsComponent
   ],
   imports: [
     BrowserModule,
