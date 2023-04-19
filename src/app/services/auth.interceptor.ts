@@ -50,6 +50,9 @@ export class AuthInterceptor implements HttpInterceptor {
           })
         );
       }
+      if ((err.status === 501 || err.status === 502) && !this.refresh) {
+        return this.authService.logout();
+      }
       this.refresh = false;
       return throwError(() => err);
     }));
